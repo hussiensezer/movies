@@ -1,5 +1,6 @@
 <?php
-
+ob_start();
+$noNavbar = '';
 require_once 'init.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,22 +28,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['error'] = 'Wrong Password Try Again';
                 redirect('login.php');
             }
-
         }else {
             $_SESSION['error'] = "You Dont Have The Permission To Come Here";
             redirect('login.php');
         }
         
-
-
     }else {
         // SESSION FOR ERRORS
         $_SESSION['errors'] = $errors;
         redirect('login.php');
     }
-
     
 }else {
     $_SESSION['error'] = "You Visit It Directely";
     redirect('login.php');
 }
+ob_end_flush();

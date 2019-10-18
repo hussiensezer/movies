@@ -35,7 +35,8 @@
                     <span class="text"><b>Roles</b></span>
                 </a>
                 <ul class="hide sub-ul">
-                    <li><a href=""> - Add</a></li>
+                    <li><a href="role_create.php"> - Create</a></li>
+                    <li><a href="roles_view.php?active=off"> - Not Active</a></li>
                 </ul>
         </div>	
         <!-- START TOOL -->

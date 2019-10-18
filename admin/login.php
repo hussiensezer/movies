@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $pageTitle = 'Login';
 $noNavbar = '';
 include 'init.php';
@@ -29,7 +30,9 @@ if(isset($_SESSION['admin'])) {
                         <h1 class="d-flex justify-content-center ">Login To</h1>
                         <img  src="assets/images/logo.png" alt="LOGO">
                         <!-- START PHP CODE -->
-
+                        <?php
+                            view_alerts();
+                        ?>
                         <!-- END PHP CODE -->
                         <form action="loginprocess.php" method="POST">
                             <div class="form-group input-perant">
@@ -57,3 +60,6 @@ if(isset($_SESSION['admin'])) {
 <script src="<?php echo $js . 'main.js' ?>"> </script>
 </body>
 </html>
+<?php
+ob_end_flush();
+?>

@@ -1,9 +1,13 @@
 <?php
+ob_start();
 $pageTitle = 'Roles';
 include 'init.php';
-autoInclude(__FILE__,'model');
-//print_r($roles);
-echo $sql;
+checkGuest();
+$active = isset($_GET['active']) && !empty($_GET['active']) ? 'WHERE active = 0' : ''; 
+// FETCH ALL THE DATA SEND TO ROLES_VIEW
+$sql = "SELECT * FROM roles {$active}";
+$roles = select_rows($sql);
+echo password_hash(123456, PASSWORD_DEFAULT);
 ?>
 
 
@@ -13,6 +17,10 @@ echo $sql;
         <div class="row">
             <div class='col-md-12 mt-5'>
                 <h1 class='text-center'>Roles</h1>
+                <?php
+                    view_alerts();
+                ?>
+                <a href='role_create.php' class='btn btn-success  mb-2'> <i class="fas fa-plus mr-1"></i>New Role</a>
                 <div class='table-responsive'>
                     <table class='table table-hover table-dark  table-striped text-center'>
                         <thead>
@@ -26,22 +34,26 @@ echo $sql;
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Admin</td>
-                                <td>0</td>
-                                <td>2019</td>
-                                <td>2019</td>
-                                <td>2019</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Admin</td>
-                                <td>0</td>
-                                <td>2019</td>
-                                <td>2019</td>
-                                <td>2019</td>
-                            </tr>
+                            <?php
+                            foreach($roles as $index => $role) {?>
+                                <tr>
+                                <td><?php echo $index + 1 ;?></td>
+                                <td><?php echo $role['name'] ;?></td>
+                                <td>
+                                    <a href='process\roles_process.php\active\<?php echo $role['id']?>'>
+                                        <span class='fa fa-check-circle <?php echo $role['active'] == 1 ? 'text-success' :'text-muted' ;?>'>
+                                        </span>
+                                    </a>
+                                </td>
+                                <td><?php echo $role['created_at'] ;?></td>
+                                <td><?php echo $role['updated_at'] ;?></td>
+                                <td>
+                                    <a href='role_edit.php?id=<?php echo $role['id']?>' class='far fa-edit text-primary mr-2'></a>
+                                    <a href='process\roles_process.php\delete\<?php echo $role['id']?>' class='fa fa-times-circle text-danger confirmed'></a>
+                                </td>
+                                </tr>
+                            <?php } ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -58,4 +70,5 @@ echo $sql;
 <!-- THE FOOTER -->
 <?php 
 include $tpl . 'footer.php';
+ob_end_flush();
 ?>
