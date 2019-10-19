@@ -35,3 +35,9 @@ $('[placeholder]').focus(function(){
     })
     
 });
+
+// THE FILE NAME TO SHOW
+$('#customFile').change(function(e){
+    var fileName = e.target.files[0].name;
+    $('.custom-file-label').html(fileName);
+});

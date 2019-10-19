@@ -10,10 +10,10 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <?php echo isset($user['name'])? ucwords($user['name']): '';?>
+                <?php echo isset($admin['name'])? ucwords($admin['name']): '';?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="user_edit.php?id=<?php echo $admin['id']?>">Profile</a>
                 <a class="dropdown-item" href="#">Vist Website</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout.php">LogOut</a>
@@ -40,7 +40,18 @@
                 </ul>
         </div>	
         <!-- START TOOL -->
-        
+        <!-- START TOOL -->
+        <div class="tool hover">
+            <a href="users_view.php" class="">
+                <i class="fas fa-user"></i>
+                <span class="text"><b>Users</b></span>
+            </a>
+            <ul class="hide sub-ul">
+                <li><a href="user_create.php"> - Create</a></li>
+                <li><a href="users_view.php?active=off"> - Not Active</a></li>
+            </ul>
+        </div>	
+        <!-- START TOOL -->
         </div>
     </div>
 </div>

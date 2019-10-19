@@ -13,7 +13,7 @@ checkGuest();
     <div class="container-fluid">
         <div class="row">
             <div class='col-md-12 mt-5'>
-                <h1 class='text-center'>Add Role</h1>
+                <h1 class='text-center'><?php echo $pageTitle ?></h1>
                 <?php
                     view_alerts();
                 ?>

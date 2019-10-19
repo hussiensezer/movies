@@ -4,20 +4,36 @@ session_start();
 require "connection.php";
 require 'validator.php';
 /*************************** [LIST OF HELPER FUNCTION] ***************************/
-// urlParse
-// AutoInclude
-//getTitle
-//checkGuest
-//total
-//view_alerts
-//redirect
-//query
-//select_row
-//select_rows
-//updateActive
-//deleteRow
+// urlParse()
+// AutoInclude()
+// getTitle()
+// checkGuest()
+// total()
+// view_alerts()
+// redirect()
+// query()
+// select_row()
+// select_rows()
+// updateActive()
+// deleteRow()
+// fetchForEdit()
+// uploadAvatar()
+// checkAvatar()
 /*************************** [LIST OF HELPER FUNCTION] ***************************/
 
+
+
+
+
+
+
+
+/*
+** urlParse => V.1
+** to Make URL PARAMETERS ARE SMALL PIECES To CAN FOUND THE CASE AND IF
+** $url[2] = THE CASE LIKE [ Add, Delete , Active, Updated ] CASE
+** $url[3]  THE [ID] WILL WHO THE CASE WILL WORK ON IT
+*/
 function urlParse() {
 	return $url = explode('/', trim(parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH), '/'), 4);
 }
@@ -58,9 +74,9 @@ function autoInclude($here, $who = 'all'){
 
 
 /*
-** Function To get The Title Of Page V 1.0
+** getTitle => V.1
+** Function To get The Title Of Page
 */
-
 function getTitle() {
     global $pageTitle;
     if(isset($pageTitle)) {
@@ -71,7 +87,8 @@ function getTitle() {
 }
 
 /*
-**Function To Check adminborad isset
+** checkGuest V.1
+**Function To Check if the Login Are Admin or Not To Take Action
 */
 function checkGuest() {
     global $back;
@@ -79,11 +96,9 @@ function checkGuest() {
 		$sql = "SELECT * FROM users WHERE id = {$_SESSION['admin']} LIMIT 1";
 		$data = select_row($sql);
 		return $data;
-        
     }else {
         if(isset($back)){
             redirect('../../login.php');  
-
         }else {
             redirect('login.php');  
         }
@@ -92,17 +107,20 @@ function checkGuest() {
 
 
 /*
-** Function To Count The Total 
+** total => V.1
+** Function To Count The Total Of Rows in Table You Are Selected
 */
 
-function total($table, $where = NULL) {
-    
-    $sql = "SELECT COUNT(id) AS count FROM {$table}  {$where}";
-    $total = select_row($sql);
-    return $total['count'];
+function total($table, $where = NULL) {    
+$sql = "SELECT COUNT(id) AS count FROM {$table}  {$where}";
+$total = select_row($sql);
+return $total['count'];
 }
 
-
+/*
+** view_alerts => V.1
+** To View All Alerts Like [ Errors, Success, Wrong, Error]
+*/
 function view_alerts() {
 	if (isset($_SESSION['success'])) {
 		echo '<div class="alert alert-success alert-dismissible fade show">' . $_SESSION['success'] ;
@@ -116,9 +134,9 @@ function view_alerts() {
 	if (isset($_SESSION['error'])) {
 		echo '<div class="alert alert-danger alert-dismissible fade show">' . $_SESSION['error'] ;
 			echo  ' <button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-			echo '<span aria-hidden="true">&times;</span>';
-		echo' </button>';
-	echo'</div>';
+				echo '<span aria-hidden="true">&times;</span>';
+			echo' </button>';
+		echo'</div>';
 		unset($_SESSION['error']);
 	}
 	if (isset($_SESSION['errors'])) {
@@ -131,38 +149,43 @@ function view_alerts() {
 				echo' </button>';
             echo '</div>';
 		}
-
-
 		unset($_SESSION['errors']);
+	}
+	if(isset($_SESSION['warning'])){
+	echo '<div class="alert alert-warning alert-dismissible fade show">' . $_SESSION['warning'] ;
+		echo  ' <button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+			echo '<span aria-hidden="true">&times;</span>';
+		echo' </button>';
+	echo'</div>';
+		unset($_SESSION['warning']);		
 	}
 }
 
 
 /*
-** Function To Redirect Where everYou Need V.2
+** redirect => V.2
+** Function To Redirect Where ever You Need
 */
 function redirect($path = NULL) {
-    
 	if($path == NULL) {
     $path = 'adminboard.php';
-        
     }elseif($path == 'back') {
         if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){
             $path = $_SERVER['HTTP_REFERER'];
         }else {
             $path = 'adminboard.php';
         }
-        
     }else {
         $path = $path;
 	}
-	
 	header("Location: {$path}");
-
     exit();
 }
 
-
+/*
+** query => v.1
+** query function to connect with DATABASE 
+*/
 function query($sql) {
 	global $connection;
 
@@ -178,20 +201,24 @@ function query($sql) {
 	return $query;
 }
 
+/*
+** select_rows => v.1
+** FETCH ALL ROW OF TABLE YOU SELECT
+*/
 function select_rows($sql) {
-	$query = query($sql);
-
-	$data = mysqli_fetch_all($query, true);
-
-	return $data;
+$query = query($sql);
+$data = mysqli_fetch_all($query, true);
+return $data;
 }
 
+/*
+** select_row => v.1
+** JUST FETCH ONE ROW
+*/
 function select_row($sql) {
-	$query = query($sql);
-
-	$row = mysqli_fetch_assoc($query);
-
-	return $row;
+$query = query($sql);
+$row = mysqli_fetch_assoc($query);
+return $row;
 }
 
 
@@ -202,14 +229,15 @@ function select_row($sql) {
 
 
 /*
-** Function The Update The Active Status To [Active Or Deactive] v.2;
+** UpdateActive => v.2
+** Function The Update The Active Status To [Active Or Deactive] ;
 ** Its Just Take 2 Parameter
 *** Table like ['users', categories]
 ** Id 
 */
 
 
-function updateActive($table,$id) {
+function updateActive($table,$id,$path = 'back') {
 	$sql = "SELECT * FROM $table WHERE id = $id LIMIT 1";
 	$data = select_row($sql);
 	if(!empty($data)){
@@ -223,25 +251,128 @@ function updateActive($table,$id) {
 			$status = 'Active';
 		}
 		$_SESSION['success'] = "Congratulation This Row Are <b> {$status}</b> Successfully";
-		redirect('back');
-	}else {
-		$_SESSION['error'] = "There's No Such <b>Id</b> Or You Trying To Do Something Bad";
-		redirect("back");
-	} 
-}
-
-function deleteRow($table,$id,$path ='back'){
-    
-    $sql = "DELETE FROM {$table} WHERE id = {$id}";
-	$delete = query($sql);
-	echo $delete; 
-	if($delete) {
-		$_SESSION['success'] = "Congratualtion This Row Are <b>Deleted Successfully</b>";
 		redirect($path);
 	}else {
-		$_SESSION['errors'] = "There's Some Error's Like Can't Delete because it's Foreign Key , Wrong Id";
-	}
+		$_SESSION['error'] = "There's No Such <b>Id</b> Or You Trying To Do Something Bad";
+		redirect($path);
+	} 
 }
+/*
+** DeleteRow => V.2
+** FUNCTION TO DELETE ANY ROW IN ANY TABLE YOU NEED ;
+** JUST GIVE IT 2 PARAMATERS LAST ONE ARE OPITION
+*/
+function deleteRow($table,$id,$path ='back'){
+	$sql = "SELECT * FROM $table WHERE id = $id LIMIT 1";
+	$data = select_row($sql);
+	if(!empty($data)){
+		$sql = "DELETE FROM {$table} WHERE id = {$id}";
+		$delete = query($sql); 
+		if($delete == TRUE) {
+			$_SESSION['success'] = "Congratualtion This Row Are <b>Deleted Successfully</b>";
+			redirect($path);
+		}else {
+			$_SESSION['errors'] = "There's Some Error's Like Can't Delete because it's Foreign Key , Wrong Id";
+		}
+	}else{
+		$_SESSION['error'] = "There's No Such <b>Id</b> Or You Trying To Do Something Bad";
+		redirect($path);
+	}
+	
+}
+
+/*
+** FetchForEdit => V.1
+** FUNCTION TO FETCH THE DATA FOR THE ROW WHO SELECT TO PERESENT THE DATA TO EDIT IT
+**	JUST GIVE IT 2 PARAMATERS  REQUEST $table, $id
+**  $PATH ARE OPTIONAL
+*/
+function fetchForEdit($table,$id,$path = 'back') {
+    $id = isset($id) && is_numeric($id) ? intval($id) : 0;
+    $sql = "SELECT * FROM $table WHERE id = {$id} ";
+    $row = select_row($sql);
+    if(empty($row)) {
+        $_SESSION['error'] = "There's No Such <b>Id</b> Or You Trying To Do Something Bad";
+        redirect($path);
+	}
+	return $row;
+}
+
+/*
+** uploadAvatar => V.1
+** FUNCTION FOR UPLOAD IMAGES TO THE UPLOADS FILE
+*/
+function uploadAvatar(Array $avatar, $size, $path) {
+	global	$errors;
+/**** START FILES LOGIC ****/
+//UPLOAD FILES VARIABLE
+$avatarName = $avatar['name'];
+$avatarSize = $avatar['size'];
+$avatarTmp  = $avatar['tmp_name'];
+$avatarType = $avatar['type'];
+//LIST OF ALLOWED FILE TYPE TO UPLOAD AND THE MIXIMUM SIZE 3MB
+$allowedExtension = ['jpeg', 'png', 'jpg','gif'];
+$maximumSize = ($size * 1024 * 1024); // 3MB
+$tmp = explode('.', $avatarName);
+$avatarExtension = end($tmp);
+/**** START FILES LOGIC ****/
+
+// MAKE VALID FOR AVATAR
+if(!in_array($avatarExtension, $allowedExtension)){
+	$errors[]= 'This Extension Are Not <b>Allowed</b> The Allowed Extension Is <b>[ PNG, JPG, JPEG, GIF ]</b>';
+}
+if($avatarSize > $maximumSize) {
+	$errors[] = "Avatar Size Can't Be More Then {$size}MB";
+}
+
+if(empty($errors)){
+	$name = 'avatar-' . rand(0,10000000000) . '.' . $avatarExtension;
+	move_uploaded_file($avatarTmp, "../uploads\\{$path}\\" . $name);
+	return $name;
+}else {
+	$_SESSION['errors'] = $errors;
+	redirect('back');
+}
+}
+
+
+/*
+**checkAvatar => V.1
+** $fileName = THE NAME OF FILES  => [$_FILE['avatar']['name']]
+** $checkOn = THE AVATAR NAME IN DATABASE => [ $user['avatar'], $course['avatar'] ]
+** $fileData = THE ARRAY OF $_FILES,
+** $size = THE MAXIMUM OF SIZE BY [ MB ] YOU NEED TO UPLOAD;
+** $path = THE FILE WILL SAVE AVATAR THERE LIKKE => ['avatars, poster', 'cast', 'shots'] file
+**
+*/
+
+function checkAvatar($fileName,$checkOn,$fileData,$size, $path) {
+		
+		$avatarPath = "..\uploads\\{$path}\\" . $checkOn;
+		if(!empty($fileName)){
+			if(file_exists($avatarPath)){
+				$avatar = uploadAvatar($fileData, $size, $path);
+				unlink($avatarPath);
+			}else{
+				$_SESSION['warning'] = "Theres No Avatar For This Row But We Upload A New Avatar For Him";
+				$avatar = uploadAvatar($fileData, $size, $path);
+			}
+		}else {
+		$avatar = $checkOn;    
+		}
+		return $avatar;
+	
+}
+
+
+
+
+
+
+
+
+
+
 
 
 // //view

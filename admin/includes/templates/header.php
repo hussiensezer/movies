@@ -3,7 +3,7 @@
 if(isset($_SESSION['admin'])){
 
     $sql = "SELECT * FROM users WHERE id = {$_SESSION['admin']} LIMIT 1";
-    $user = select_row($sql);
+    $admin = select_row($sql);
 }
 ?>
 <!DOCTYPE html>

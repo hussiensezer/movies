@@ -3,14 +3,8 @@ ob_start();
 $pageTitle = 'Edit Roles';
 include 'init.php';
 checkGuest();
-$id = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$sql = "SELECT * FROM roles WHERE id = {$id}";
-$role = select_row($sql);
-
-if(empty($role)) {
-    $_SESSION['error'] = "There's No Such <b>Id</b> Or You Trying To Do Something Bad";
-    redirect('roles_show.php');
-}
+// FETCH THE ROLE WHO WE ARE SELECT BY THE GET FOR ID TO EDIT OF HIS DATA
+$role = fetchForEdit('roles',$_GET['id']);
 
 ?>
 
@@ -20,7 +14,7 @@ if(empty($role)) {
     <div class="container-fluid">
         <div class="row">
             <div class='col-md-12 mt-5'>
-                <h1 class='text-center'>Edit Roles</h1>
+                <h1 class='text-center'><?php echo $pageTitle ?></h1>
                 <?php
                     view_alerts();
                 ?>
