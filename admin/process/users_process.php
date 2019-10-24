@@ -112,7 +112,7 @@ case'add':
     $pass    = password_hash($_POST['pass'], PASSWORD_DEFAULT);
     $avatar  = $_FILES['avatar'];
     $role_id = $_POST['role'];
-    $active  = $_POST['active'];
+    $active = isset($_POST['active']) ? $_POST['active'] : 0 ;
 
     //I USE FUNCTION TO MAKE VALIDATOR IN FILE IF THERE ERROR WILL PASS IN SESSION['errors'] THE ERROR
     // IF NO ERRORS WILL UPLOAD THE FILE TO THE STATION AND RETURN THE NAME OF FILE

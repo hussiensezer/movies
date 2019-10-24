@@ -52,6 +52,45 @@
             </ul>
         </div>	
         <!-- START TOOL -->
+        <!-- START TOOL -->
+        <div class="tool hover">
+            <a href="categories_view.php" class="">
+                <i class="fas fa-folder"></i>
+                <span class="text"><b>Categories</b></span>
+            </a>
+            <ul class="hide sub-ul">
+                <li><a href="category_create.php"> - Create</a></li>
+                <li><a href="categories_view.php?active=off"> - Not Active</a></li>
+            </ul>
+        </div>	
+        <!-- START TOOL -->
+        <!-- START TOOL -->
+        <div class="tool hover">
+            <a href="subs_view.php" class="">
+                <i class="fas fa-file"></i>
+                <span class="text"><b>Sub-Category</b></span>
+            </a>
+            <ul class="hide sub-ul">
+                <li><a href="sub_create.php"> - Create</a></li>
+                <li><a href="subs_view.php?active=off"> - Not Active</a></li>
+            </ul>
+        </div>	
+        <!-- START TOOL -->    
+        <!-- START TOOL -->
+            <div class="tool hover">
+            <a href="products_view.php" class="">
+                <i class="fas fa-film"></i>
+                <span class="text"><b>Product</b></span>
+            </a>
+            <ul class="hide sub-ul">
+                <li><a href="product_create.php"> - Create</a></li>
+                <li><a href="products_view.php?active=off"> - Not Active</a></li>
+                <li><a href="products_view.php?prod=movies"> - Movies</a></li>
+                <li><a href="products_view.php?prod=series"> - Series</a></li>
+            </ul>
+        </div>	
+        <!-- START TOOL -->
+
         </div>
     </div>
 </div>

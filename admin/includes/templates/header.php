@@ -16,6 +16,8 @@ if(isset($_SESSION['admin'])){
     <!-- OUR CSS FILES -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/richtext.min.css">
+    
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>

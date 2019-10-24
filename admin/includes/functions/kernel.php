@@ -322,11 +322,11 @@ if(!in_array($avatarExtension, $allowedExtension)){
 	$errors[]= 'This Extension Are Not <b>Allowed</b> The Allowed Extension Is <b>[ PNG, JPG, JPEG, GIF ]</b>';
 }
 if($avatarSize > $maximumSize) {
-	$errors[] = "Avatar Size Can't Be More Then {$size}MB";
+	$errors[] = "{$path} Size Can't Be More Then {$size}MB";
 }
 
 if(empty($errors)){
-	$name = 'avatar-' . rand(0,10000000000) . '.' . $avatarExtension;
+	$name = "{$path}-" . rand(0,10000000000) . '.' . $avatarExtension;
 	move_uploaded_file($avatarTmp, "../uploads\\{$path}\\" . $name);
 	return $name;
 }else {

@@ -266,4 +266,24 @@ padding:10px 30px;
     display: block;
 
 }
-/*** END PAGES STYLE ***/ 
+/*** END PAGES STYLE ***/
+
+/* START PRODUCT STYLE */
+
+.product-container input:not([type='submit']),
+.product-container select,
+.custom-file-label{
+    width:70%;
+}
+.product-container .richText {
+    width:100%;
+    direction: rtl;
+    text-align: right;
+}
+.product-container .richText ul {
+    padding-left:10px;
+}
+.product-container .richText ul li a{
+    padding: 10px 10px;
+}
+/* END PRODUCT STYLE */

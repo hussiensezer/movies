@@ -29,6 +29,7 @@ $users = select_rows($sql);
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Avatar</th>
+                                <th>Control</th>
                                 <th>Active</th>
                                 <th>Created_At</th>
                                 <th>Updated_At</th>
@@ -43,6 +44,7 @@ $users = select_rows($sql);
                                 <td><?php echo $user['name'] ;?></td>
                                 <td><?php echo $user['email'] ;?></td>
                                 <td><img class='avatar' src="uploads/avatars/<?php echo $user['avatar'] ;?>" alt="avatar"></td>
+                                <td><?php echo $user['role_name'] ;?></td>
                                 <td>
                                     <a href='process\users_process.php\active\<?php echo $user['id']?>'>
                                         <span class='fa fa-check-circle <?php echo $user['active'] == 1 ? 'text-success' :'text-muted' ;?>'>
