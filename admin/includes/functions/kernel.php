@@ -19,6 +19,7 @@ require 'validator.php';
 // fetchForEdit()
 // uploadAvatar()
 // checkAvatar()
+// viewsCountUpdate()
 /*************************** [LIST OF HELPER FUNCTION] ***************************/
 
 
@@ -168,12 +169,12 @@ function view_alerts() {
 */
 function redirect($path = NULL) {
 	if($path == NULL) {
-    $path = 'adminboard.php';
+    $path = 'index.php';
     }elseif($path == 'back') {
         if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){
             $path = $_SERVER['HTTP_REFERER'];
         }else {
-            $path = 'adminboard.php';
+            $path = 'index.php';
         }
     }else {
         $path = $path;
@@ -362,10 +363,24 @@ function checkAvatar($fileName,$checkOn,$fileData,$size, $path) {
 		}
 		return $avatar;
 	
+	}
+
+/*
+** viewsCountUpdate => v.1
+** $table = THE TABLE WHO WILL SELECT [users,employ];
+** $id = THE identity ;
+** $WHERE = THE COLUM WHO SELECTED TO FETCH THE DATA
+** $colum = THE COLUM THE DATA WILL BE UPDATED ON HIM
+*/
+
+function viewsCountUpdate($table,$id,$where ,$colum) {
+$sql = "SELECT * FROM {$table} where $where =  {$id}";
+$view = select_row($sql);
+$counter = $view[$colum]+1;
+$sqltwo = "UPDATE {$table} SET $colum = {$counter} WHERE $where = {$id} ";
+$update = query($sqltwo);
+return $counter;
 }
-
-
-
 
 
 

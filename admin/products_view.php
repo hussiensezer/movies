@@ -50,7 +50,7 @@ $products = select_rows($sql);
                             foreach($products as $index => $product) {?>
                                 <tr>
                                 <td><?php echo $index + 1 ;?></td>
-                                <td><a class='text-light' href="product_details.php?id=<?php echo $product['id']?>"><?php echo $product['name'] ;?> </a></td>
+                                <td><a class='text-light' href="episodes_view.php?id=<?php echo $product['id']?>"><?php echo $product['name'] ;?> </a></td>
                                 <td>
                                     <a href='process\products_process.php\active\<?php echo $product['id']?>'>
                                         <span class='fa fa-check-circle <?php echo $product['active'] == 1 ? 'text-success' :'text-muted' ;?>'>

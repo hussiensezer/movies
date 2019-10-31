@@ -36,7 +36,7 @@ if(isset($_SESSION['admin'])) {
                         <!-- END PHP CODE -->
                         <form action="loginprocess.php" method="POST">
                             <div class="form-group input-perant">
-                                <input type="email" name='email' class="form-control" placeholder='Enter Your Email' autocomplete='off'>
+                                <input type="email" name='email' class="form-control" placeholder='Enter Your Email' autocomplete='off' autofocus> 
                                 <i class="fas fa-envelope fa-fw fa-1x"></i>
                             </div>
                             <div class="form-group input-perant">

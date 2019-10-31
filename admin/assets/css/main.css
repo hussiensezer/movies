@@ -3,6 +3,11 @@
     font-family: Go;
     src: url(../webfonts/GothamLight-Regular.otf);
 }
+@font-face {
+    font-family: Kufi;
+    src: url(../webfonts/NotoKufiArabic-Regular.ttf);
+}
+
 body {
     background-color:#18191D;
     font-family:GO ;
@@ -287,3 +292,59 @@ padding:10px 30px;
     padding: 10px 10px;
 }
 /* END PRODUCT STYLE */
+
+/* START PRODUCT_DETAILS PAGE */
+.movie-details{
+    direction: rtl;
+    font-family: Kufi;
+}
+.movie-details h1 {
+    font-size:28px;
+}
+.movie-details .movie-info {
+    background-color: black;
+    height:200px;
+    padding:20px 20px;
+    border-radius: 10px;
+    opacity: .8;
+}
+.movie-details .movie-info:hover {
+    opacity: 1;
+}
+img.poster {
+    width:90%;
+    height:600px
+}
+/* END PRODUCT_DETAILS PAGE */
+
+/* START DASHBOARD */
+.counting .group {
+    height:150px;
+}
+.counting .group .info-group {
+    background-color:#9C27B0;
+    height:100%;
+    border-radius: 15px;
+    
+    
+}
+.counting .group .info-group .info {
+    padding-top:3%;
+}
+.counting .group .info-group .info span {
+    font-size:35px;
+    font-weight: bold;
+}
+.counting .group .info-group .info a {
+    display:block;
+    margin-top:10px;
+}
+.counting .group .info-group .info a:hover {
+    color:white;
+    text-decoration: none;
+}
+.counting .group .info-group .info b {
+    font-size:20px;
+    font-weight: bold;
+}
+/* END DASHBOARD */

@@ -49,7 +49,7 @@ CREATE TABLE sub_categories (
 );
 CREATE TABLE products (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(500) NOT NULL,
     description text NOT NULL,
     year YEAR NOT NULL,
     rate FLOAT NOT NULL,
@@ -69,16 +69,14 @@ CREATE TABLE products (
 CREATE TABLE episode_product(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    time VARCHAR(100) NOT NULL,
-    tags VARCHAR(255) NOT NULL,
     active INT(1) DEFAULT 1,
     soft_delete TIMESTAMP  NULL,
     user_id INT UNSIGNED NOT NULL,
-    product_series_id  INT UNSIGNED NOT NULL,
+    product_id  INT UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_series_id) REFERENCES products(id)
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
 CREATE TABLE img_product (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -102,10 +100,11 @@ CREATE TABLE url_product (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (product_id) REFERENCES episode_product(id)
 );
 CREATE TABLE views(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(500) NOT NULL,
     counter INT NOT NULL,
     active INT(1) DEFAULT 1,
     product_id INT UNSIGNED NOT NULL,

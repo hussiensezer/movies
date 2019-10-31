@@ -58,7 +58,7 @@ echo    $getProd    =  "SELECT * FROM products WHERE id = $id LIMIT 1";
     // OUR POST'S
     $active = isset($_POST['active']) ? $_POST['active'] : 0 ;
     $year   = filter_var($_POST['year'],FILTER_SANITIZE_NUMBER_INT);
-    $rate   = filter_var($_POST['rate'], FILTER_SANITIZE_NUMBER_FLOAT);
+    $rate   = $_POST['rate'];
     $cate   = filter_var($_POST['cate_id'],FILTER_SANITIZE_NUMBER_INT);
     $type   = filter_var($_POST['type'], FILTER_SANITIZE_STRING);
     $poster = $_FILES['poster'];
@@ -142,7 +142,7 @@ case'add':
     $name   = filter_var($_POST['name'],FILTER_SANITIZE_STRING);
     $active = isset($_POST['active']) ? $_POST['active'] : 0 ;
     $year   = filter_var($_POST['year'],FILTER_SANITIZE_NUMBER_INT);
-    $rate   = filter_var($_POST['rate'], FILTER_SANITIZE_NUMBER_FLOAT);
+    $rate   = $_POST['rate'];
     $cate   = filter_var($_POST['cate_id'],FILTER_SANITIZE_NUMBER_INT);
     $type   = filter_var($_POST['type'], FILTER_SANITIZE_STRING);
     $poster = $_FILES['poster'];
@@ -198,7 +198,18 @@ case'add':
                                     )
                                     ";
         $insert = query($sql);
-        $_SESSION['success'] = "Congratulation". ucfirst($type) . "Are Created Successfully";
+            // WE GONA ADD THE ROW OF VIEW TO COUNT THE VIEWER OF THIS MOVIE OR SEIRES
+            // CHECK IF THE PROUDCT ARE ADD OF NOT
+            if($insert == 1) {
+                $selectProduct = "SELECT name,id FROM products WHERE name = '{$name}' LIMIT 1";
+                $proud = select_row($selectProduct);
+                
+                $sqlView = "INSERT INTO views (name, counter, active, product_id) VALUES ('{$proud['name']}', 1, {$active}, {$proud['id']} ) ";
+                $addView = query($sqlView);
+            }else{
+                $_SESSION['error'] = 'The Table Of View Of Product Are Not Created You Have To Add It Manual';
+            }
+        $_SESSION['success'] = "Congratulation ". ucfirst($type) . "  Are Created Successfully";
         redirect('../../products_view.php');
     }else{
         $_SESSION['errors'] = $errors;

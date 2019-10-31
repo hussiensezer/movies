@@ -17,7 +17,6 @@ checkGuest();
                     view_alerts();
                 ?>
                 
-                </div>
             </div>
         </div>
     </div>
