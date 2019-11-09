@@ -36,7 +36,7 @@ case'update':
     $active = $_POST['active'];
 
     //THIS QUERY TO CHECK IF THERE IN DATABASE ARE ROLE WITH THIS ID
-echo    $getProd    =  "SELECT * FROM products WHERE id = $id LIMIT 1";
+    $getProd    =  "SELECT * FROM products WHERE id = $id LIMIT 1";
     $prod       =  select_row($getProd);
 
     /* This If Condition For Check If The POST['name'] are not Equel the name of cate in database

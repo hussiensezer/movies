@@ -1,114 +1,14 @@
 <?php
 ob_start();
-$pageTitle = 'El-Joker Movies';
+$pageTitle = isset($_GET['name']) ? $_GET['name'] : 'El-Joker Movies';
 require 'init.php';
 
-$sql = "SELECT * FROM products WHERE active = 1";
+$sql = "SELECT * FROM products WHERE sub_category_id = {$_GET['id']} AND active = 1";
 $pagination = pagination('products',$sql, 20);
 $products = $pagination['date'];
 $buttons = $pagination['button'];
-
 ?>
 
-<!-- START ONE SECTION VIEWS -->
-<div class="views text-white " dir="rtl">
-	<div class="container ">
-		<div class="row ">
-			<!--START DIV one COL-LG-7-->
-			<div class="col-lg-7 col-sm-12 p-0 ">
-				<div class="cover">
-					<a href="#" > action </a>
-					<img src="assets/images/joker.jpg " alt="covermovie" class="image">
-					<div class="overlay">
-						<div class="text">
-							<h3> الجوكر فيلم </h3>
-							<span>22-10-2019</span>
-							<i class="fas fa-share-alt"></i>
-						</div>
-
-					</div>
-				</div>
-			</div>
-	<!--END DIV one COL-LG-7-->
-	<!--START DIV one COL-LG-5-->
-			<div class="col-lg-5 col-sm-12 p-0">
-				<!--START PART DIV -->
-				<div class="part bg-light">
-					<div class="container">
-					<div class="row">
-							<div class="col-md-6 p-0 col-sm-12">
-								<!-- START DIV PHOTO -->
-								<div class="photo">
-									<a href="#" > action </a>
-									<img src="assets/images/wiki.jpg" alt="partmovie" class="image">
-									<div class="overlay">
-										<div class="text_part">
-											<h6>الجوكر فيلم  </h6>
-											<span>22-10-2019</span>
-											<i class="fas fa-share-alt pb-3"></i>
-										</div>
-
-									</div>
-								</div>
-								<!--END DIV PHOTO -->
-							</div>
-							<div class="col-md-6 p-0 col-sm-12">
-									<!--START DIV PHOTO -->
-								<div class="photo">
-									<a href="#" > action </a>
-									<img src="assets/images/jk.jpg">
-										<div class="overlay">
-										<div class="text_part">
-											<h6> الجوكر فيلم  </h6>
-											<span>22-10-2019</span>
-											<i class="fas fa-share-alt pb-3"></i>
-										</div>
-									</div>
-								</div>
-									<!--END DIV PHOTO -->
-							</div>
-							<div class="col-md-6 p-0 col-sm-12">
-									<!--START DIV PHOTO -->
-								<div class="photo">
-									<a href="#" > action </a>
-									<img src="assets/images/wiki.jpg" alt="partmovie" class="image">
-										<div class="overlay">
-										<div class="text_part ">
-											<h6> الجوكر فيلم  </h6>
-											<span>22-10-2019</span>
-											<i class="fas fa-share-alt pb-3"></i>
-										</div>
-									</div>
-								</div>
-									<!--END DIV PHOTO -->
-							</div>
-							<div class="col-md-6  p-0 col-sm-12">
-									<!--START DIV PHOTO -->
-								<div class="photo">
-									<a href="#" > action </a>
-									<img src="assets/images/jk.jpg" alt="partmovie" class="image">
-										<div class="overlay">
-										<div class="text_part">
-											<h6>الجوكر فيلم  </h6>
-											<span>22-10-2019</span>
-											<i class="fas fa-share-alt pb-3"></i>
-										</div>
-
-									</div>
-								</div>
-								<!--END DIV PHOTO -->
-							</div>
-						</div>
-					</div>
-				</div>
-			<!-- END DIV PART -->
-			</div>
-			<!--END DIV one COL-LG-5-->
-		</div>
-	</div>
-</div>
-<!-- END ONE SECTION VIEWS -->
-<!-- //////////////////////////////////////////////////////////////// -->
 <!--START FEATUER DIV -->
 <div class="featuer text-white  pt-2" dir="rtl">
 	<div class="container">
@@ -179,6 +79,8 @@ $buttons = $pagination['button'];
 </div>
 <!--END FEATUER DIV -->
 
+
+
 <!-- START PRODUCTS -->
 <div class='products col-md-12 mt-5 mb-5'>
 	<div class="container">
@@ -239,7 +141,22 @@ $buttons = $pagination['button'];
 <!-- END PRODUCTS -->
 
 
-<?php 
-include $tpl . 'footer.php'; // For Navbar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+include $tpl . "footer.php";
 ob_end_flush();
 ?>

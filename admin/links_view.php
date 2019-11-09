@@ -8,7 +8,7 @@ checkGuest();
 
 
 // EPISODE_PRODUCT;
-$sqlUrl =  "SELECT * FROM url_product WHERE episode_id = {$_GET['id']} ORDER BY id  DESC";
+$sqlUrl =  "SELECT * FROM url_product WHERE product_id = {$_GET['id']} ORDER BY id  DESC";
 $urls = select_rows($sqlUrl);
 
 ?>

@@ -12,9 +12,22 @@ if(isset($_GET['prod']) && $_GET['prod'] == 'movies'){
 }elseif(isset($_GET['prod']) && $_GET['prod'] == 'series') {
     $prod = 'WHERE series = 1';
 }
+
+
+// SEARCH AND LIMIT OF SHOW
+$searchQuery = '';
+if(isset($_GET['q']) && !empty($_GET['q']) && is_string($_GET['q'])) {
+$searchQuery = "WHERE products.name LIKE '%{$_GET['q']}%' OR year LIKE '%{$_GET['q']}%' OR products.active  LIKE '%{$_GET['q']}%' OR products.created_at LIKE '%{$_GET['q']}%' OR products.updated_at LIKE '%{$_GET['q']}%' OR description LIKE '%{$_GET['q']}%' OR tags LIKE '%{$_GET['q']}%' OR sub_categories.name LIKE '%{$_GET['q']}%' ";   
+}
+
+if(isset($_GET['limit']) && !empty($_GET['limit']) && is_numeric($_GET['limit'])) {
+    $limit = $_GET['limit'];
+}
+
 // FETCH ALL THE DATA SEND TO products_VIEW
-$sql = "SELECT products.* , users.name AS created_by, sub_categories.name AS in_sub_cate  FROM products INNER JOIN users ON products.user_id =  users.id INNER JOIN sub_categories ON products.sub_category_id = sub_categories.id {$prod} ORDER BY id DESC";
-$products = select_rows($sql);
+$sql = "SELECT products.* , users.name AS created_by, sub_categories.name AS in_sub_cate  FROM products INNER JOIN users ON products.user_id =  users.id INNER JOIN sub_categories ON products.sub_category_id = sub_categories.id {$searchQuery} {$prod} ORDER BY id DESC";
+$products = pagination('products',$sql )['date'];
+$buttons = pagination('products', $sql)['button'];
 
 ?>
 
@@ -26,10 +39,22 @@ $products = select_rows($sql);
         <div class="row">
             <div class='col-md-12 mt-5'>
                 <h1 class='text-center'><?php echo $pageTitle ?></h1>
+                <div class="container mb-5 mt-5">
+                    <form class="row">
+                    <div class="col-col-md-4">
+                    <a href='product_create.php' class='btn btn-success  mb-2'> <i class="fas fa-plus mr-1"></i>New Product</a>
+                    </div>
+                        <div class="form-group col-md-4 offset-md-5">
+                            <input type="search" name="q" class="form-control" placeholder="Search" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Search" class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
                 <?php
                     view_alerts();
                 ?>
-                <a href='product_create.php' class='btn btn-success  mb-2'> <i class="fas fa-plus mr-1"></i>New Product</a>
                 <div class='table-responsive'>
                     <table class='table table-hover table-dark  table-striped text-center'>
                         <thead>
@@ -76,6 +101,9 @@ $products = select_rows($sql);
 
                         </tbody>
                     </table>
+                    <?php
+                    echo !empty($buttons) ? $buttons : '';
+                    ?>
                 </div>
             </div>
         </div>

@@ -183,7 +183,7 @@ padding:10px 30px;
 .tools .tool span {
     display: none;
 }
-.active .tools .tool span {
+.active-fadeOut .tools .tool span {
     display:inline;
 }
 
@@ -221,19 +221,20 @@ padding:10px 30px;
     z-index: 20;
     float:left;
     margin-left:1%;
-    transition: all .5s ease-in-out
+    transition: all .5s ease-in-out;
+    padding-bottom:100px;
 }
 @media(max-width:575.98px) {
     .right-side {
         width:100%;
     }
 }
-.active {
+.active-fadeOut {
     width:15%;
 
 }
 @media(max-width:575.98px) {
-    .active {
+    .active-fadeOut {
         width:100%;
     }
 }
@@ -322,14 +323,35 @@ img.poster {
     height:150px;
 }
 .counting .group .info-group {
-    background-color:#9C27B0;
+    background-color:#E32A69;
     height:100%;
     border-radius: 15px;
     
     
 }
+.counting .group:nth-child(2) > .info-group {
+    background-color:#FDD12C;
+}
+.counting .group:nth-child(3) > .info-group {
+    background-color:#E56A1E;
+}
+.counting .group:nth-child(4) > .info-group {
+    background-color:#31054A;
+}
+.counting .group:nth-child(5) > .info-group {
+    background-color:#EE7879;
+}
+.counting .group:nth-child(6) > .info-group {
+    background-color:#3EB650;
+}
+.counting .group:nth-child(7) > .info-group {
+    background-color:#FCC133;
+}
+.counting .group:nth-child(8) > .info-group {
+    background-color:#E12B38;
+}
 .counting .group .info-group .info {
-    padding-top:3%;
+    padding-top:10%;
 }
 .counting .group .info-group .info span {
     font-size:35px;
@@ -346,5 +368,22 @@ img.poster {
 .counting .group .info-group .info b {
     font-size:20px;
     font-weight: bold;
+}
+.lastest .card ul {
+    padding-left:0;
+}
+.lastest .card ul li {
+    cursor: pointer;
+}
+hr.hr {
+    display: block;
+    height: 0px;
+    width: 84%;
+    margin-top:40px;
+    margin-bottom:40px;
+    background-color: rgba(255,255,255,0.3);
+}
+.show-action {
+    /* display:none; */
 }
 /* END DASHBOARD */

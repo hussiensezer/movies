@@ -17,12 +17,12 @@ $id = isset($url[3]) && is_numeric($url[3]) ? intval($url[3]) : 0;
 switch($status){
 /************************** [ Active Case ] ***************************/
 case'active':
-    updateActive('url_product',$id);
+    updateActive('roles',$id);
 break;
 
 /************************** [ Remove Case ] ***************************/
 case'delete':
-    deleteRow('url_product', $id);
+    deleteRow('roles', $id);
 break;
 
 /************************** [ Updated Case ] ***************************/
@@ -32,20 +32,26 @@ case'update':
 
     // OUR POST'S
     $id     = $_POST['id'];
-    $link   = $_POST['link'];
+    $name   = filter_var($_POST['name'],FILTER_SANITIZE_STRING);
     $active = $_POST['active'];
-    $epis = $_POST['episode_id'];
+
+    //THIS QUERY TO CHECK IF THERE IN DATABASE ARE ROLE WITH THIS ID
+    $getRole    =  "SELECT * FROM roles WHERE id = {$id} LIMIT 1";
+    $role       =  select_row($getRole);
+
+    /* This If Condition For Check If The POST['name'] are not Equel the name of role in database
+    do something else check if this exists or not*/
+    $condition = $role['name'] != $name ? '|unique:roles,name' : '|exists:roles,name';
 
     // CHECK IF THE POSTS ARE VALID TO UPDATE IN DATABASE OR NOT
     $errors = validator($_POST,[
-        'id'         => 'required|numeric|exists:url_product,id',
-        'link'       => "required|max:255|string",
-        'episode_id' => "required|exists:episode_product,id",  
+        'id'         => 'required|numeric|exists:roles,id',
+        'name'       => "required|max:50|string{$condition}",
         'active'     => "numeric|in:0,1"
     ]);
     // CHECK IF THERE NO ERRORS IN VALIDATOR FUNCTION
     if(empty($errors)){
-        $sql    = "UPDATE url_product SET link = '{$link}' , episode_id = '{$epis}' ,active = '{$active}' WHERE id = {$id} ";
+        $sql    = "UPDATE roles SET name = '{$name}' , active = '{$active}' WHERE id = {$id} ";
         $update = query($sql);
         $_SESSION['success'] = "Congratulation <b>Updated Are Successfully</b>";
         redirect('back');
@@ -61,26 +67,21 @@ case'add':
     $checkRequest = $_SERVER['REQUEST_METHOD'] != 'POST' ? redirect('../../../login.php') : '';
 
     // OUR POST'S
-    $link   = $_POST['link'];
-    $active = $_POST['active'];
-    $epis = $_POST['episode_id'];
-    
-    // THIS ROW WILL BE ADD BY THE ADMIN WHO ARE ONLINE RIGHT NOW THIS WILL BE USER_ID
-    $user   = $_SESSION['admin'];
+    $name   = filter_var($_POST['name'],FILTER_SANITIZE_STRING);
+    $active = isset($_POST['active']) ? $_POST['active'] : 0 ;
 
     // CHECK IF THE POSTS ARE VALID TO UPDATE IN DATABASE OR NOT
     $errors =  validator($_POST,[   
-        'link'    => 'required|string|min:3|max:255',
-        'active'  => "numeric|in:0,1",
-        'episode_id' => "required|numeric|exists:episode_product,id"
+        'name'   => 'required|string|min:3|max:50|unique:roles,name',
+        'active' => "numeric|in:0,1"
     ]);
     
     // CHECK IF THERE NO ERRORS IN VALIDATOR FUNCTION
     if(empty($errors)){
-        $sql = "INSERT INTO url_product (link,active,user_id,product_id) VALUES ('{$link}', {$active}, {$user},{$epis} )";
+        $sql = "INSERT INTO roles (name,active) VALUES ('{$name}', {$active})";
         $insert = query($sql);
-        $_SESSION['success'] = 'Congratulation Episode Are Created Successfully';
-        redirect("../../links_view.php?id={$epis}&prod={$_POST['on']}&epi={$_POST['epi']}&idprod={$_POST['idprod']}");
+        $_SESSION['success'] = 'Congratulation Role Are Created Successfully';
+        redirect('../../roles_view.php');
     }else{
         $_SESSION['errors'] = $errors;
         redirect('back');

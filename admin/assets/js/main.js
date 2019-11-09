@@ -4,11 +4,11 @@ $(function(){
     'use strict';
 // FOR NAVBAR IN DASHBOARD TO OPEN THE SLIDE AND CLOSE IT AUTOMATIC
     $('#door').mouseover(function(){
-        $('.left-side').addClass('active');
+        $('.left-side').addClass('active-fadeOut');
         $('.right-side').removeClass('full-width');
     });
     $('#door').mouseleave(function(){
-        $('.left-side').removeClass('active');
+        $('.left-side').removeClass('active-fadeOut');
             $('.right-side').addClass('full-width');
     });
     
@@ -46,3 +46,27 @@ $('#customFile').change(function(e){
 $(document).ready(function(){
     $('.content').richText();
 });
+
+// TO DISPLAY THE ACTION IN LASTEST TO LIKE ACTIVE DELETE EDIT
+// $('.child-link').hover(function(){
+//     $(this).find('.show-action').fadeIn(200);
+// },function () {
+//     $(this).find('.show-action').fadeOut(200);
+//     });
+
+
+
+
+$('.toggel-info').click(function(){
+    
+    $(this).toggleClass('selected').parent().next('.card-body').fadeToggle(200);
+    
+    if($(this).hasClass('selected')) {
+        $(this).html('<i class="fas fa-plus fa-lg"></i>');
+    }else {
+        $(this).html('<i class="fas fa-minus fa-lg"></i>');
+    }
+    
+});
+
+

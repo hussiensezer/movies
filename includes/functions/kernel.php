@@ -329,7 +329,7 @@ if($avatarSize > $maximumSize) {
 
 if(empty($errors)){
 	$name = "{$path}-" . rand(0,10000000000) . '.' . $avatarExtension;
-	move_uploaded_file($avatarTmp, "../../uploads\\{$path}\\" . $name);
+	move_uploaded_file($avatarTmp, "../uploads\\{$path}\\" . $name);
 	return $name;
 }else {
 	$_SESSION['errors'] = $errors;
@@ -388,8 +388,8 @@ return $counter;
 ** totalRows => v.1
 **
 */
-function totalRows($table,$count = '*', $where = '') {
-	$sql = "SELECT COUNT($count) FROM $table $where";
+function totalRows($table, $count = '*') {
+	$sql = "SELECT COUNT($count) FROM $table";
 	$query = select_row($sql);
 	$total = $query['COUNT(*)'];
 	return $total;
@@ -459,10 +459,9 @@ function lastestRows($select = '*', $from, $order, $limit) {
 // ];
 
 
-function pagination($table, $sql) {
+function pagination($table, $sql, $amount = 10) {
 	global $searchQuery; 
 	$page = 1 ;
-	$amount = 10;
 	$total = totalRows($table);
 	$pageCount = ceil($total / $amount);
 
