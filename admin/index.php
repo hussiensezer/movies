@@ -237,9 +237,9 @@ $series = select_row($sql);
                                                 <!-- START LAST ITEM -->
                                                 <li class='row mb-2 child-link'>
                                                 <div class="name col-md-8 row">
-                                                    <b class="col-md-8"> <?php echo $epis['name'] ?> </b>
+                                                    <b class="col-md-8"> <?php echo $epis['prod_name'] ?> </b>
                                                     <b class="col-md-4">
-                                                        <?php echo $epis['prod_name'] ?>
+                                                        <?php echo $epis['name'] ?>
                                                     </b>
                                                 </div>
                                                 <div class='group-action col-md-4 text-right show-action'>

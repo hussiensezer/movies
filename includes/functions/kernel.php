@@ -459,7 +459,7 @@ function lastestRows($select = '*', $from, $order, $limit) {
 // ];
 
 
-function pagination($table, $sql, $amount = 10) {
+function pagination($table, $sql, $paramates = '',$amount = 10) {
 	global $searchQuery; 
 	$page = 1 ;
 	$total = totalRows($table);
@@ -482,9 +482,9 @@ $button  .= '<ul class="pagination">';
 for($i = 1 ; $i <= $pageCount ; $i++) {
 	if (in_array($i, [1,$page - 1, $page - 2 ,$page, $page + 1,  $page + 2, $pageCount - 1, $pageCount])) {
 		if($page == $i) {
-		$button .= "<li class='active page-item bg-dark text-white'> <a href='?page{$i}' class='page-link'> {$i} </a> </li>";
+		$button .= "<li class='active page-item bg-dark text-white'> <a href='?page{$i}{$paramates}' class='page-link'> {$i} </a> </li>";
 		} else {
-			$button .=  "<li class='page-item '><a href='?page={$i}' class='page-link '>{$i}</a></li>";
+			$button .=  "<li class='page-item '><a href='?page={$i}{$paramates}' class='page-link '>{$i}</a></li>";
 		}
 	}
 }

@@ -312,6 +312,7 @@ $avatarName = $avatar['name'];
 $avatarSize = $avatar['size'];
 $avatarTmp  = $avatar['tmp_name'];
 $avatarType = $avatar['type'];
+$avatarError = $avatar['error'];
 //LIST OF ALLOWED FILE TYPE TO UPLOAD AND THE MIXIMUM SIZE 3MB
 $allowedExtension = ['jpeg', 'png', 'jpg','gif'];
 $maximumSize = ($size * 1024 * 1024); // 3MB
@@ -319,13 +320,22 @@ $tmp = explode('.', $avatarName);
 $avatarExtension = end($tmp);
 /**** START FILES LOGIC ****/
 
-// MAKE VALID FOR AVATAR
-if(!in_array($avatarExtension, $allowedExtension)){
-	$errors[]= 'This Extension Are Not <b>Allowed</b> The Allowed Extension Is <b>[ PNG, JPG, JPEG, GIF ]</b>';
+// MAKE VALID FOR 
+
+if($avatarError == 4) {
+	$errors[] = 'You Uploaded Empty File ';
+}else {
+	if(!in_array($avatarExtension, $allowedExtension)){
+		$errors[]= 'This Extension Are Not <b>Allowed</b> The Allowed Extension Is <b>[ PNG, JPG, JPEG, GIF ]</b>';
+	}
+	if($avatarSize > $maximumSize) {
+		$errors[] = "{$path} Size Can't Be More Then {$size}MB";
+	}
+
 }
-if($avatarSize > $maximumSize) {
-	$errors[] = "{$path} Size Can't Be More Then {$size}MB";
-}
+
+
+
 
 if(empty($errors)){
 	$name = "{$path}-" . rand(0,10000000000) . '.' . $avatarExtension;

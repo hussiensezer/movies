@@ -494,6 +494,37 @@ span.dropdown-toggle {
 
 
 
+/********************* START PRODUCT PAGE *********************/
+.prod .logo img {
+	width:100%;
+	height:100%;
+	border-radius: 15px;
+	padding:2px;
+	box-shadow: 3px 3px 0px rgba(255,255,255,.25);
+}
+.prod .product-details {
+	background-color:#2B2B2B;
+	height:200px;
+	overflow-y: auto;
+	padding:10px 20px;
+	border-radius: 15px;;
+	box-shadow: 3px 3px 0px rgba(255,255,255,.25);
+	font-size:13px;
+}
+.prod .product-details .title{
+	color:#54d5ef
+}
+.prod .product-details .data {
+	color:#eb3639!important;
+}
+.badge-tags {
+	font-size:13.5px
+}
+.desc {
+	font-size:13px;
+}
+/********************* END PRODUCT PAGE *********************/
+
 
 
 

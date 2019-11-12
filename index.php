@@ -4,7 +4,7 @@ $pageTitle = 'El-Joker Movies';
 require 'init.php';
 
 $sql = "SELECT * FROM products WHERE active = 1";
-$pagination = pagination('products',$sql, 20);
+$pagination = pagination('products',$sql, '',20);
 $products = $pagination['date'];
 $buttons = $pagination['button'];
 
@@ -189,7 +189,9 @@ $buttons = $pagination['button'];
 			<!-- START PRODUCT -->
 			<div class="product col-md-3 mt-2 mb-2">
 				<div class="details">
-					<img src="uploads/posters/<?php echo $product['avatar']?>" alt="poster" \>
+					<a href="product.php?id=<?php echo $product['id'] . "&watch=" . str_replace(' ','-',$product['name'])?> ">
+						<img src="uploads/posters/<?php echo $product['avatar']?>" alt="poster" \>
+					</a>
 					<div class="overlay-details">
 						<p class=''> <?php echo $product['name']?> </p>
 						<p class='description'> <?php echo $product['description']?> </p>
@@ -223,6 +225,7 @@ $buttons = $pagination['button'];
 					endif;
 					?>
 					</div>
+				
 				</div>
 			</div>
 		<?php

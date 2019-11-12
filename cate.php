@@ -1,12 +1,19 @@
 <?php
 ob_start();
-$pageTitle = isset($_GET['name']) ? $_GET['name'] : 'El-Joker Movies';
+$pageTitle = isset($_GET['name']) & !empty($_GET['name'])? $_GET['name'] : 'El-Joker Movies';
 require 'init.php';
+// THIS THE PARAMATES FOR THE PAGINATION FUNCTION
+$id = isset($_GET['id']) & !empty($_GET['id']) ? intval($_GET['id']) : '0' ;
+$tableAndCondition = "products WHERE sub_category_id = {$id} AND active = 1";
+$sql = "SELECT * FROM products WHERE sub_category_id = {$id} AND active = 1";
+$paramaters = "&id={$id}&name={$pageTitle}";
+$amount = 20;
 
-$sql = "SELECT * FROM products WHERE sub_category_id = {$_GET['id']} AND active = 1";
-$pagination = pagination('products',$sql, 20);
+$pagination = pagination($tableAndCondition,$sql,$paramaters,$amount);
+
 $products = $pagination['date'];
 $buttons = $pagination['button'];
+
 ?>
 
 <!--START FEATUER DIV -->
