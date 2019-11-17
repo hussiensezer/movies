@@ -79,6 +79,9 @@ case'add':
     if(empty($errors)){
         $sql = "INSERT INTO episode_product (name,active,user_id,product_id) VALUES ('{$name}', {$active}, {$user},{$prod} )";
         $insert = query($sql);
+        // UPDATE THE PRODUCT FOR SERIERS 
+        $sql = "UPDATE products SET show_up = current_timestamp() WHERE id = {$prod}";
+        $updateProduct = query($sql);
         $_SESSION['success'] = 'Congratulation Episode Are Created Successfully';
         redirect("../../episodes_view.php?id={$prod}");
     }else{

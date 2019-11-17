@@ -8,6 +8,7 @@ $movies = select_row($sql);
 
 $sql = 'SELECT products.id, sum(views.counter) AS total_views FROM products INNER JOIN views ON products.id = product_id WHERE series = 1';
 $series = select_row($sql);
+
 ?>
 
 <!-- START RIGHT SIDE -->

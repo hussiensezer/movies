@@ -93,6 +93,7 @@ $buttons = pagination('products', $sql)['button'];
                                 <td><?php echo $product['created_at'] ;?></td>
                                 <td><?php echo $product['updated_at'] ;?></td>
                                 <td>
+                                    <a href='process\products_process.php\up\<?php echo $product['id']?>' class='fas fa-arrow-up text-success mr-2 '></a>
                                     <a href='product_edit.php?id=<?php echo $product['id']?>' class='far fa-edit text-primary mr-2'></a>
                                     <a href='process\products_process.php\delete\<?php echo $product['id']?>' class='fa fa-times-circle text-danger confirmed'></a>
                                 </td>

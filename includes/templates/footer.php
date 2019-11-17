@@ -37,7 +37,9 @@ $chunks = array_chunk($subs,$count);
 							<div class="dropdown-menu menu-bg">
 							<?php 
 								foreach($subs as $sub):
-									echo"<a class='dropdown-item' href='#'>{$sub['name']}</a>";
+									echo"<a class='dropdown-item' href='cate.php?id={$sub['id']}". "&name=" . str_replace(' ', '-', $sub['name']). "'>";
+									echo $sub['name'];
+									echo"</a>";
 								endforeach;
 							?>
 								
@@ -49,7 +51,13 @@ $chunks = array_chunk($subs,$count);
 						else:
 					?> 
 					<div class="btn-group">
-						<a href="#" class="btn btn-muted drop"><?php echo $cate['name']?></a>
+					<?php
+						foreach($subs as $sub):
+					?>
+						<a href="cate.php?id=<?php echo $sub['id'] . "&name=" .str_replace(' ', '-', $sub['name']) ?>" class="btn btn-muted drop"><?php echo $cate['name']?></a>
+					<?php
+						endforeach;
+					?>
 						<span class="one"></span>
 						<span class="two"></span>
 						<span class="there"></span>

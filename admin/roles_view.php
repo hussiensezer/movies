@@ -76,6 +76,7 @@ $buttons = pagination('roles', $sql)['button'];
                                         <span class='fa fa-check-circle <?php echo $role['active'] == 1 ? 'text-success' :'text-muted' ;?>'>
                                         </span>
                                     </a>
+                                    <button onclick="getActive()">Active</button>
                                 </td>
                                 <td><?php echo $role['created_at'] ;?></td>
                                 <td><?php echo $role['updated_at'] ;?></td>
@@ -96,6 +97,26 @@ $buttons = pagination('roles', $sql)['button'];
         </div>
     </div>
 </div>
+<script>
+    // Make Function To Do The Request
+function getActive() {
+    var myRequest = new XMLHttpRequest();
+
+    myRequest.onreadystatechange = function(){
+
+        if(this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText);
+        }
+    }
+        myRequest.open(
+            "GET",
+            "process\\roles_process.php\\active\\1",
+            true
+        );
+        myRequest.send();
+    }
+
+</script>
 <!-- END RIGHT SIDE -->
 
 

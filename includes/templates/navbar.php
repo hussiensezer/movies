@@ -4,9 +4,47 @@ $categories = select_rows($sql);
 
 
 ?>
+<div class="upper-section mb-2">
+	<div class="container">
+		<div class="row">
+		<div class="col-md-6">
+			<form class="row" action="search.php" method="GET">
+				<div class="form-group mt-3 ml-3 search">
+					<input type="search" placeholder='ابحث عن' name="search" class='form-control  bg-dark text-white' required="required" autocomplete="off">
+				</div>
+				<input type="submit"  class="btn btn-info h-50 btn-md mt-3" value="Search">
+			</form>
+		</div>
+		<div class="col-md-6 mt-3 ">
+		<ul class="social row float-left">
+				<li class="">
+					<a href="#" >
+						<span></span>
+						<span></span>
+						<span class="fab fa-facebook-f"></span>
+					</a>
+				</li>
+				<li class="">
+					<a href="#" >  
+						<span></span>
+						<span></span>
+						<span class="fab fa-google-plus-g"></span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span></span>
+						<span></span>
+						<span class="fab fa-linkedin-in"></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		</div>
+	</div>
+</div>
+
 <nav class="navbar navbar-expand-md navbar-light ">
-
-
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>

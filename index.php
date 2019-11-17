@@ -3,7 +3,7 @@ ob_start();
 $pageTitle = 'El-Joker Movies';
 require 'init.php';
 
-$sql = "SELECT * FROM products WHERE active = 1";
+$sql = "SELECT * FROM products WHERE active = 1 ORDER BY show_up DESC";
 $pagination = pagination('products',$sql, '',20);
 $products = $pagination['date'];
 $buttons = $pagination['button'];
@@ -197,36 +197,49 @@ $buttons = $pagination['button'];
 						<p class='description'> <?php echo $product['description']?> </p>
 					</div>
 				</div>
+				<!-- START PRODUCT-INFO -->
 				<div class="product-info container col-md-12">
 					<div class="row">
-						<div class="col-md-6">
-							<i class="fas fa-eye fa-fw"></i>
+						
+						<?php
+							$episodes = totalRows("episode_product WHERE product_id = {$product['id']} AND  active = 1");
+							if(empty($episodes)):
+							echo"<small class='col-md-6 text-center text-muted'> جارى التحميل...</small>";
+							else:
+						?>
+						<div class="col-md-4 ml-2 data">
+								<i class="fas fa-eye fa-fw"></i>
 							<span class="views">
 								<?php 
 									$sql = "SELECT counter FROM views WHERE active = 1 AND product_id = {$product['id']}";
 									$view = select_row($sql);
 									echo $view['counter'];
+								
 								?>
 							</span>
 						</div>
 						<?php
-							if($product['movie'] == 1) :
-							echo "<b class='col-md-6 text-left'>New</b>";
+							if($product['movie'] == 1 ) :
+								if($product['year'] == date("Y")):
+									echo "<b class='col-md-2 data text-center'>New</b>";
+								endif;
 							else:
 						?>
-						<?php
-								
-						?>
-						<div class="col-md-6 text-left">
-							<i class="fas fa-video"></i>
-							<span class="episode">4</span>
+						<div class="col-md-3 data text-center">
+							<i class="fas fa-video fa-fw"></i>
+							<span class="episode">
+								<?php
+								echo $episodes;
+								?>
+							</span>
 						</div>
 					<?php
-					endif;
+						endif;// EMPTY EPISODES
+					endif; // IF MOVIE  AND YEAR == SAME YEAR
 					?>
 					</div>
-				
 				</div>
+			<!-- END PRODUCT-INFO -->
 			</div>
 		<?php
 			endforeach;
@@ -234,7 +247,9 @@ $buttons = $pagination['button'];
 		<!-- END PRODUCTS -->
 	</div>
 		<?php
+		
 			echo $buttons;
+
 		?>
 			
 	</div>

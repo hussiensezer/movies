@@ -6,7 +6,17 @@ pre {
     font-family: Kufi;
     src: url(../webfonts/NotoKufiArabic-Regular.ttf);
 }
-
+hr.hr {
+    display: block;
+    height: 0px;
+    width: 84%;
+    margin-top:40px;
+    margin-bottom:40px;
+    background-color: rgba(255,255,255,0.3);
+}
+ul li {
+	list-style:none;
+}
 body{
 	background-color: #141414;
 	color: #FFF;
@@ -296,8 +306,9 @@ span.dropdown-toggle {
 .details:hover >  .overlay-details {
 	top:150px;
 }
-.products .product-info {
-	border:1px solid rgba(255,255,255,.5);
+.products .product-info  .data{
+	font-size:13px;
+	border:1px solid #CCC;
 }
 .overlay-details .description {
 	font-size:15px;
@@ -504,8 +515,7 @@ span.dropdown-toggle {
 }
 .prod .product-details {
 	background-color:#2B2B2B;
-	height:200px;
-	overflow-y: auto;
+	height:250px;
 	padding:10px 20px;
 	border-radius: 15px;;
 	box-shadow: 3px 3px 0px rgba(255,255,255,.25);
@@ -529,4 +539,83 @@ span.dropdown-toggle {
 
 
 
+/*START 404 EMOJEY PAGE NOT FOUND*/
+.emojey{
+	padding:280px 0;
+}
+.emojey i{
+	font-size: 100px;
+}
+.emojey h1{
+	color: red;
+	padding-top: 10px;
+}
 
+/*END 404 EMOJEY PAGE NOT FOUND*/
+
+/* EMPTY FILE */
+.warning-empty {
+	margin-top:60px;
+	margin-bottom:300px;
+}
+
+/* START UPPER-SECTION */
+
+ul.social {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: flex;
+	margin-right:20px;
+}
+ul.social li {
+    position: relative;
+    list-style: none;
+    width:40px;
+    height:40px;
+   margin-left:10px;
+    
+}
+ul.social li span {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: #000;
+    transition: 0.5s;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color:#FFF;
+    font-size:30px !important;
+	border-radius: 50%;
+
+}
+
+
+ul.social li:hover span:nth-child(3){
+    transform: translate(5px ,5px);
+    opacity: .6;
+}
+ul.social li:hover span:nth-child(2){
+    transform: translate(4px ,4px);
+    opacity: .4;
+}
+ul.social li:hover span:nth-child(1){
+    transform: translate(0 ,0);
+    opacity: .2;
+}
+
+ul.social li:nth-child(1) span {
+    background-color:#3b5999;
+}
+
+ul.social li:nth-child(2) span {
+    background-color:#55acee;
+}
+
+ul.social li:nth-child(3) span {
+    background-color:#dd4b39;
+}
+/* END UPPER-SECTION */

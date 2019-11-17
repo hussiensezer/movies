@@ -32,7 +32,7 @@ $prods = select_rows($sql);
                                 <option selected disabled>Select Episode</option>
                                 <?php
                                     foreach($prods as $prod){
-                                        echo "<option value='{$prod['id']}'". ($prod['id'] == $link['episode_id'] ? 'selected' : '') . ">";
+                                        echo "<option value='{$prod['id']}'". ($prod['id'] == $link['product_id'] ? 'selected' : '') . ">";
                                             echo $prod['name'];
                                         echo "</option>";
                                     }

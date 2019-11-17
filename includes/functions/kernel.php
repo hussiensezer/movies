@@ -374,8 +374,8 @@ function checkAvatar($fileName,$checkOn,$fileData,$size, $path) {
 ** $colum = THE COLUM THE DATA WILL BE UPDATED ON HIM
 */
 
-function viewsCountUpdate($table,$id,$where ,$colum) {
-$sql = "SELECT * FROM {$table} where $where =  {$id}";
+function viewsCountUpdate($select,$table,$id,$where ,$colum) {
+$sql = "SELECT {$select} FROM {$table} where $where =  {$id}";
 $view = select_row($sql);
 $counter = $view[$colum]+1;
 $sqltwo = "UPDATE {$table} SET $colum = {$counter} WHERE $where = {$id} ";
@@ -460,13 +460,13 @@ function lastestRows($select = '*', $from, $order, $limit) {
 
 
 function pagination($table, $sql, $paramates = '',$amount = 10) {
-	global $searchQuery; 
+	//global $searchQuery; 
 	$page = 1 ;
 	$total = totalRows($table);
 	$pageCount = ceil($total / $amount);
 
 
-
+	
 
 if(isset($_GET['page']) && !empty($_GET['page']) ) {
 	if(is_numeric($_GET['page']) && $_GET['page'] <= $pageCount ){
@@ -477,19 +477,24 @@ $offset = ($page - 1) * $amount ;
 $sql = " $sql LIMIT {$amount} OFFSET  {$offset}";
 $result = select_rows($sql);
 
-$button = '<nav aria-label="Page navigation">';
-$button  .= '<ul class="pagination">';
-for($i = 1 ; $i <= $pageCount ; $i++) {
-	if (in_array($i, [1,$page - 1, $page - 2 ,$page, $page + 1,  $page + 2, $pageCount - 1, $pageCount])) {
-		if($page == $i) {
-		$button .= "<li class='active page-item bg-dark text-white'> <a href='?page{$i}{$paramates}' class='page-link'> {$i} </a> </li>";
-		} else {
-			$button .=  "<li class='page-item '><a href='?page={$i}{$paramates}' class='page-link '>{$i}</a></li>";
+// CHECK IF THE PAGES MORE THEN ONE TO SHOW THE BUTTON OF PAGINATION;
+if($pageCount > 1):
+	$button = '<nav aria-label="Page navigation">';
+	$button  .= '<ul class="pagination">';
+	for($i = 1 ; $i <= $pageCount ; $i++) {
+		if (in_array($i, [1,$page - 1, $page - 2 ,$page, $page + 1,  $page + 2, $pageCount - 1, $pageCount])) {
+			if($page == $i) {
+			$button .= "<li class='active page-item bg-dark text-white'> <a href='?page{$i}{$paramates}' class='page-link'> {$i} </a> </li>";
+			} else {
+				$button .=  "<li class='page-item '><a href='?page={$i}{$paramates}' class='page-link '>{$i}</a></li>";
+			}
 		}
 	}
-}
-$button .= "</ul>";
-$button .= "</nav>";
+	$button .= "</ul>";
+	$button .= "</nav>";
+else:
+	$button = '';
+endif;
 return[
 	'date' => $result,
 	'button' => $button

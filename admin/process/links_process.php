@@ -45,7 +45,7 @@ case'update':
     ]);
     // CHECK IF THERE NO ERRORS IN VALIDATOR FUNCTION
     if(empty($errors)){
-        $sql    = "UPDATE url_product SET link = '{$link}' , episode_id = '{$epis}' ,active = '{$active}' WHERE id = {$id} ";
+        $sql    = "UPDATE url_product SET link = '{$link}' , product_id = '{$epis}' ,active = '{$active}' WHERE id = {$id} ";
         $update = query($sql);
         $_SESSION['success'] = "Congratulation <b>Updated Are Successfully</b>";
         redirect('back');

@@ -15,6 +15,14 @@ $status = $url[2];
 $id = isset($url[3]) && is_numeric($url[3]) ? intval($url[3]) : 0;
 
 switch($status){
+
+/************************** [ Active Case ] ***************************/
+case'up':
+    $sql = "UPDATE products SET show_up = current_timestamp() WHERE id = {$id}";
+    $updateProduct = query($sql);
+    $_SESSION['success'] = "Congratulation <b>Up Product Are Successfully Will Show In First Page :) </b>";
+    redirect('back');
+break;
 /************************** [ Active Case ] ***************************/
 case'active':
     updateActive('products',$id);
@@ -146,7 +154,7 @@ case'add':
     $cate   = filter_var($_POST['cate_id'],FILTER_SANITIZE_NUMBER_INT);
     $type   = filter_var($_POST['type'], FILTER_SANITIZE_STRING);
     $poster = $_FILES['poster'];
-    $tags   = $_POST['tags'];
+    $tags   = filter_var($_POST['tags'], FILTER_SANITIZE_STRING);
     $desc   = $_POST['desc'];
 
     // EMPTY VARIABLE TO ASSIGN THEM AFTER CHECK IF THE POST OF TYPE ARE MOVIE OR SERIES

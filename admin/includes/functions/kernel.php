@@ -3,6 +3,7 @@
 session_start();
 require "connection.php";
 require 'validator.php';
+
 /*************************** [LIST OF HELPER FUNCTION] ***************************/
 // urlParse()
 // AutoInclude()
