@@ -13,6 +13,27 @@ body {
     font-family:GO ;
     color:white;
 }
+.loading-ajax {
+    position: absolute;
+    top:50%;
+    left:45%;
+    z-index: 55;
+}
+.bor-danger {
+    border:3px solid red;
+}
+.bor-success {
+    border:3px solid green;
+    
+}
+.wrong-message {
+    font-size: 11px;
+    color: red;
+    margin-top: 10px;
+}
+.valid-message {
+    display:none;
+}
 /* END GLOBAL  */
 
 /*** START STYLE OF LOGIN PAGE ***/

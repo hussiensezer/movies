@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $pageTitle = 'Add User';
+$ajax = 'user_ajax.js';
 include 'init.php';
 checkGuest();
 
@@ -18,11 +19,9 @@ $roles = select_rows($sql);
         <div class="row">
             <div class='col-md-12 mt-5'>
                 <h1 class='text-center'><?php echo $pageTitle ?></h1>
-                <?php
-                    view_alerts();
-                ?>
+                   <div class="respone"></div>
                 <div class='form-container col-md-4 offset-md-4 mt-5'>
-                    <form action="process/users_process.php/add" method="POST" enctype='multipart/form-data'>
+                    <form action="process/users_create.php" method="POST" enctype='multipart/form-data' id="create-user">
                         <div class="form-group">
                             <input type="text" name="name" placeholder="Your Name" class="form-control" >
                         </div>
@@ -33,8 +32,9 @@ $roles = select_rows($sql);
                             <input type="password" name="pass" placeholder="Your Password" class="form-control">
                         </div>
                         <div class='form-group'>
+                           <label>* Role Name</label>
                             <select class='form-control' name='role'>
-                                <option selected disabled>Select Role</option>
+                                
                                 <?php
                                     foreach($roles as $role){
                                         echo "<option value='{$role['id']}'" . ">";

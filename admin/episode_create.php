@@ -21,7 +21,7 @@ $prods = select_rows($sql);
                 <div class='form-container col-md-4 offset-md-4 mt-5'>
                     <form action="process/episodes_process.php/add" method="POST">
                         <div class="form-group">
-                            <input type="text" name="name" placeholder="Episode Name" class="form-control" ">
+                            <input type="text" name="name" placeholder="Episode Name" class="form-control">
                         </div>   
                         <div class="form-group">
                             <input type="hidden"  name="product_id" value="<?php echo $_GET['id']?>">

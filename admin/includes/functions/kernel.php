@@ -15,8 +15,8 @@ require 'validator.php';
 // query()
 // select_row()
 // select_rows()
-// updateActive()
-// deleteRow()
+// updateActive()       // Stop Because Ajax New = > ajaxActiveRow();
+// deleteRow()          // Stop Because Ajax New = > ajaxDeleteRow();    
 // fetchForEdit()
 // uploadAvatar()
 // checkAvatar()
@@ -97,7 +97,7 @@ function checkGuest() {
     global $back;
     if(isset($_SESSION['admin'])){
 		$sql = "SELECT * FROM users WHERE id = {$_SESSION['admin']} LIMIT 1";
-		$data = select_row($sql);
+		 $data = select_row($sql);
 		return $data;
     }else {
         if(isset($back)){
@@ -248,6 +248,7 @@ function updateActive($table,$id,$path = 'back') {
 			$sql = "UPDATE {$table} SET active = 0 WHERE id = {$id}";
 			$update = query($sql);
 			$status = 'DeActive';
+            
 		}else{
 			$sql = "UPDATE {$table} SET active = 1 WHERE id = {$id}";
 			$update = query($sql);
@@ -315,19 +316,19 @@ $avatarTmp  = $avatar['tmp_name'];
 $avatarType = $avatar['type'];
 $avatarError = $avatar['error'];
 //LIST OF ALLOWED FILE TYPE TO UPLOAD AND THE MIXIMUM SIZE 3MB
-$allowedExtension = ['jpeg', 'png', 'jpg','gif'];
+$allowedExtension = ['jpeg', 'png', 'jpg','gif','svg'];
 $maximumSize = ($size * 1024 * 1024); // 3MB
 $tmp = explode('.', $avatarName);
 $avatarExtension = end($tmp);
-/**** START FILES LOGIC ****/
+
 
 // MAKE VALID FOR 
 
 if($avatarError == 4) {
-	$errors[] = 'You Uploaded Empty File ';
+	$errors[] = "You Uploaded Empty File";
 }else {
 	if(!in_array($avatarExtension, $allowedExtension)){
-		$errors[]= 'This Extension Are Not <b>Allowed</b> The Allowed Extension Is <b>[ PNG, JPG, JPEG, GIF ]</b>';
+		$errors[]= "This Extension Are Not <b>Allowed</b> The Allowed Extension Is <b>[ PNG, JPG, JPEG, GIF ]</b>";
 	}
 	if($avatarSize > $maximumSize) {
 		$errors[] = "{$path} Size Can't Be More Then {$size}MB";
@@ -337,15 +338,13 @@ if($avatarError == 4) {
 
 
 
-
-if(empty($errors)){
-	$name = "{$path}-" . rand(0,10000000000) . '.' . $avatarExtension;
-	move_uploaded_file($avatarTmp, "../../uploads\\{$path}\\" . $name);
-	return $name;
-}else {
-	$_SESSION['errors'] = $errors;
-	redirect('back');
-}
+    if(empty($errors)){
+        $name = "{$path}-" . rand(0,10000000000) . '.' . $avatarExtension;
+        move_uploaded_file($avatarTmp, "../uploads\\{$path}\\" . $name);
+        return $name;
+    }else {
+        return $errors;
+    }
 }
 
 
@@ -480,9 +479,9 @@ function pagination($table, $sql) {
 
 
 
-if(isset($_GET['page']) && !empty($_GET['page']) ) {
-	if(is_numeric($_GET['page']) && $_GET['page'] <= $pageCount ){
-		$page = $_GET['page'];
+if(isset($_POST['page']) && !empty($_POST['page']) ) {
+	if(is_numeric($_POST['page']) && $_POST['page'] <= $pageCount ){
+		$page = $_POST['page'];
 	} 
 }
 $offset = ($page - 1) * $amount ;
@@ -494,9 +493,9 @@ $button  .= '<ul class="pagination">';
 for($i = 1 ; $i <= $pageCount ; $i++) {
 	if (in_array($i, [1,$page - 1, $page - 2 ,$page, $page + 1,  $page + 2, $pageCount - 1, $pageCount])) {
 		if($page == $i) {
-		$button .= "<li class='active page-item bg-dark text-white'> <a href='?page{$i}' class='page-link'> {$i} </a> </li>";
+		$button .= "<li class='active page-item bg-dark text-white '> <a href='?page={$i}' class='page-link pages' data-page='{$i}'>{$i}</a> </li>";
 		} else {
-			$button .=  "<li class='page-item '><a href='?page={$i}' class='page-link '>{$i}</a></li>";
+			$button .=  "<li class='page-item '><a href='?page={$i}' class='page-link pages' data-page='{$i}'>{$i}</a></li>";
 		}
 	}
 }
@@ -506,5 +505,74 @@ return[
 	'date' => $result,
 	'button' => $button
 ];
+
+}
+
+ 
+/*
+** ajaxActiveRow => v.3
+** Ajax Active Function
+** Function The Update The Active Status To [Active Or Deactive] ;
+** Its Just Take 2 Parameter
+** Table like ['users', categories] && Id Of Row
+** HE RESPONSE FROM THIS FUNCTION IS JSON YOU CAN HANDEL IT BY AJAX REQUEST
+*/
+
+function ajaxActiveRow($table,$id) {
+    $response = [];
+	$sql = "SELECT * FROM $table WHERE id = $id LIMIT 1";
+	$data = select_row($sql);
+	if(!empty($data)){
+		if($data['active'] == 1 ){
+			$sql = "UPDATE {$table} SET active = 0 WHERE id = {$id}";
+			$update = query($sql);
+			$message = 'DeActive';
+            $status = 'text-muted';
+            
+		}else{
+			$sql = "UPDATE {$table} SET active = 1 WHERE id = {$id}";
+			$update = query($sql);
+			$message = 'Active';
+            $status = 'text-success';
+		}
+		$response += [
+            'message' => "<div class='alert alert-success message'>Congratulation This Row Are <b> {$message}</b> Successfully </div>",
+            'status'  => "{$status}"
+        ];
+	}else {
+		$response +=  ['message' => "<div class='alert alert-danger message'>There's No Such <b>Id</b> Or You Trying To Do Something Bad</div>"];
+	}
+       echo json_encode($response);
+}
+
+
+
+/*
+** ajaxDeleteRow => V.3
+** Ajax Delete Function
+** FUNCTION TO DELETE ANY ROW IN ANY TABLE YOU NEED ;
+** JUST GIVE IT 2 PARAMATERS
+** THE RESPONSE FROM THIS FUNCTION IS JSON YOU CAN HANDEL IT BY AJAX REQUEST
+*/
+function ajaxDeleteRow($table,$id,$path ='back'){
+    $response = '';
+    
+	$sql = "SELECT * FROM $table WHERE id = $id LIMIT 1";
+	$data = select_row($sql);
+	if(!empty($data)){
+		$sql = "DELETE FROM {$table} WHERE id = {$id}";
+		$delete = query($sql);
+		if($delete == TRUE) {
+            $response = "<div class='alert alert-success message'>Congratualtion This Row Are <b>Deleted Successfully</b></div>";
+			
+		}else {
+            $response =  "<div class='alert alert-danger message'>There's Some Error's Like Can't Delete because it's Foreign Key , Wrong Id</div>";
+               
+		}
+	}else{
+        $response =  "<div class='alert alert-danger '>There's No Such <b>Id</b> Or You Trying To Do Something Bad</div>";
+	
+	}
+	 echo $response;
 
 }

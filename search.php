@@ -27,9 +27,7 @@ $pagination = pagination($table,$sql,$parameters,$amount);
 $products = $pagination['date'];
 $buttons = $pagination['button'];
 if(empty($products)):
-
     echo "<div class='alert alert-warning mt-5 mb-5'> لا توجد نتائج</div>";
-    exit();
 else:
 ?>
 
@@ -63,26 +61,7 @@ else:
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
-
 include $tpl . 'footer.php';
 endif;
 ?>

@@ -1,26 +1,13 @@
 <?php
 ob_start();
 $pageTitle = 'Roles';
+$ajax = 'ajax.js';
 include 'init.php';
 checkGuest();
-$active = isset($_GET['active']) && !empty($_GET['active']) ? 'WHERE active = 0' : ''; 
+ 
 
 // SEARCH AND LIMIT OF SHOW
-$searchQuery = '';
-$limit = 10;
-$numbers = [10,20,50,100];
-if(isset($_GET['q']) && !empty($_GET['q']) && is_string($_GET['q'])) {
-$searchQuery = "WHERE name LIKE '%{$_GET['q']}%' OR created_at LIKE '%{$_GET['q']}%' OR updated_at LIKE '%{$_GET['q']}%'";   
-}
 
-if(isset($_GET['limit']) && !empty($_GET['limit']) && is_numeric($_GET['limit'])) {
-$limit = $_GET['limit'];
-}
-
-$sql = "SELECT * FROM roles $searchQuery $active";
-$roles = pagination('roles',$sql )['date'];
-
-$buttons = pagination('roles', $sql)['button'];
 
 
 
@@ -43,80 +30,25 @@ $buttons = pagination('roles', $sql)['button'];
                     <a href='role_create.php' class='btn btn-success  mb-4'> <i class="fas fa-plus mr-1"></i>New Role</a>
                     </div>
                         <div class="form-group col-md-4 offset-md-5">
-                            <input type="search" name="q" class="form-control" placeholder="Search" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>">
+                            <input type="search" name="q" class="form-control" id="search" placeholder="Search" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Search" class="btn btn-success">
+                            <input type="submit" value="Search" class="btn btn-success" >
                         </div>
                     </form>
                 </div>
                 <?php
                     view_alerts();
                 ?>
-                <div class='table-responsive'>
-                    <table class='table table-hover table-dark  table-striped text-center'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Active</th>
-                                <th>Created_At</th>
-                                <th>Updated_At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach($roles as $index => $role) {?>
-                                <tr>
-                                <td><?php echo $index + 1 ;?></td>
-                                <td><?php echo $role['name'] ;?></td>
-                                <td>
-                                    <a href='process\roles_process.php\active\<?php echo $role['id']?>'>
-                                        <span class='fa fa-check-circle <?php echo $role['active'] == 1 ? 'text-success' :'text-muted' ;?>'>
-                                        </span>
-                                    </a>
-                                    <button onclick="getActive()">Active</button>
-                                </td>
-                                <td><?php echo $role['created_at'] ;?></td>
-                                <td><?php echo $role['updated_at'] ;?></td>
-                                <td>
-                                    <a href='role_edit.php?id=<?php echo $role['id']?>' class='far fa-edit text-primary mr-2'></a>
-                                    <a href='process\roles_process.php\delete\<?php echo $role['id']?>' class='fa fa-times-circle text-danger confirmed'></a>
-                                </td>
-                                </tr>
-                            <?php } ?>
-
-                        </tbody>
-                    </table>
-                <?php
-                echo !empty($buttons) ? $buttons : '';
-                ?>
+                <div class="response"></div>
+                <div class='table-responsive' id="table-response">
+               
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    // Make Function To Do The Request
-function getActive() {
-    var myRequest = new XMLHttpRequest();
 
-    myRequest.onreadystatechange = function(){
-
-        if(this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText);
-        }
-    }
-        myRequest.open(
-            "GET",
-            "process\\roles_process.php\\active\\1",
-            true
-        );
-        myRequest.send();
-    }
-
-</script>
 <!-- END RIGHT SIDE -->
 
 
@@ -126,5 +58,4 @@ function getActive() {
 <!-- THE FOOTER -->
 <?php 
 include $tpl . 'footer.php';
-ob_end_flush();
 ?>

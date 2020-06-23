@@ -16,7 +16,7 @@ $id = isset($url[3]) && is_numeric($url[3]) ? intval($url[3]) : 0;
 
 switch($status){
 
-/************************** [ Active Case ] ***************************/
+/************************** [ UP Case ] ***************************/
 case'up':
     $sql = "UPDATE products SET show_up = current_timestamp() WHERE id = {$id}";
     $updateProduct = query($sql);

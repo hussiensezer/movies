@@ -13,8 +13,11 @@ require_once "includes/functions/kernel.php";
 
 
 //     // Include The Important Files
+if(!isset($noHeader)){
+include $tpl . 'header.php'; // For Header
+}
 
-     include $tpl . 'header.php'; // For Header
+     
 
 
 

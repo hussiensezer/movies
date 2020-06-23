@@ -35,6 +35,7 @@ if(isset($_SESSION['admin'])) {
                         <!-- START PHP CODE -->
                         <?php
                             view_alerts();
+                       
                         ?>
                         <!-- END PHP CODE -->
                         <form action="loginprocess.php" method="POST">

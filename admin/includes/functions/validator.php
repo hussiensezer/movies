@@ -18,7 +18,7 @@ function validator($data, $rules){
 		if ( !empty($data[$k]) ) {
 			foreach ($v as $x => $y) {
 
-				if ($y == 'string' && !is_string($data[$k]) ){
+				if ($y == 'string' && !is_string($data[$k]) && !filter_var($data[$k], FILTER_SANITIZE_STRING)){
 					$errors[] = $k.' field must be a string.';
 				}
 				

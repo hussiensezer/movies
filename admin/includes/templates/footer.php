@@ -3,6 +3,11 @@
 <script src="<?php echo $js . 'bootstrap.min.js'?>"> </script>
 <script src="<?php echo $js . 'jquery.richtext.min.js'?>"> </script>
 <script src="<?php echo $js . 'chart.js'?>"></script>
-<script src="<?php echo $js . 'main.js'?>"> </script>  
+<?php
+  if(isset($ajax)){
+      echo "<script src='{$js}{$ajax}'></script>";
+  }  
+?>
+<script src="<?php echo $js . 'main.js'?>"> </script>
 </body>
 </html>

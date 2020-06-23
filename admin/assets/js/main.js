@@ -29,10 +29,7 @@ $('[placeholder]').focus(function(){
 });
 
 // CONFIRMED MESSAGE FOR DELETE
-    $('.confirmed').click(function(){
-        
-        return confirm('Are You Sure To Delete ');
-    })
+ 
     
 });
 

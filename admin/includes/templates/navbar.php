@@ -13,7 +13,7 @@
                 <?php echo isset($admin['name'])? ucwords($admin['name']): '';?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="user_edit.php?id=<?php echo $admin['id']?>">Profile</a>
+                <a class="dropdown-item" href="user_edit.php?id=<?php echo isset($admin['name'])? ucwords($admin['name']): '';?>">Profile</a>
                 <a class="dropdown-item" href="#">Vist Website</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout.php">LogOut</a>

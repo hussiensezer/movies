@@ -2,7 +2,7 @@
 ob_start();
 $pageTitle = 'Dashboard';
 require_once 'init.php';
-$admin = checkGuest();
+checkGuest();
 $sql = 'SELECT products.id, sum(views.counter) AS total_views FROM products INNER JOIN views ON products.id = product_id WHERE movie = 1';
 $movies = select_row($sql);
 
